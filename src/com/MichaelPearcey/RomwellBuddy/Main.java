@@ -96,8 +96,8 @@ public class Main {
 
 
     public void holdFullScreenMouse() {
-        if(Mouse.getX() > 900) Mouse.setCursorPosition(900, Mouse.getY());
-        if(Mouse.getY() > 540) Mouse.setCursorPosition(Mouse.getX(), 540);
+        if(Mouse.getX() > WIDTH) Mouse.setCursorPosition(900, Mouse.getY());
+        if(Mouse.getY() > HEIGHT) Mouse.setCursorPosition(Mouse.getX(), 540);
     }
 
     public static void main(String[] args) {
