@@ -3,6 +3,7 @@ package com.MichaelPearcey.RomwellBuddy;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -11,6 +12,7 @@ import org.newdawn.slick.opengl.Texture;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Main {
+
     private final int FWIDTH = 1500, FHEIGHT=900; // Frame parameters
     private int WIDTH; // Screen width
     private int HEIGHT; // Screen height
@@ -24,7 +26,7 @@ public class Main {
     /*
     Creates the window frame for Romwell
      */
-    public Main() {
+    private Main() {
         try {
             createDisplay();
             update();
@@ -36,7 +38,7 @@ public class Main {
     /**
      * Set the display.
      */
-    public void createDisplay() throws org.lwjgl.LWJGLException {
+    private void createDisplay() throws org.lwjgl.LWJGLException {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         WIDTH = (int)screenSize.getWidth();
         HEIGHT = (int)screenSize.getHeight();
@@ -64,7 +66,7 @@ public class Main {
     /**
      * Starts the game loop.
      */
-    public void update() throws LWJGLException {
+    private void update() throws LWJGLException {
         Menu menu = new Menu();
         while(!Display.isCloseRequested())
         {
@@ -90,12 +92,37 @@ public class Main {
     /*
     Creates the constant key listeners (ones that will always apply to the game, regardless of level)
      */
-    public void mainKeyListeners() {
+    private void mainKeyListeners() {
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+            killAllGame();
+        if(Keyboard.isKeyDown(Keyboard.KEY_F2)== true)
+            toggleFullScreen();
+    }
 
+    private void toggleFullScreen() {
+        if(!fullScreen) {
+            glViewport(viewPortStartX, viewPortStartY, trueWidth, trueHeight);
+            try {
+                Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
+            } catch (LWJGLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            fullScreen = true;
+        } else {
+            glViewport(viewPortStartX, viewPortStartY, FWIDTH, FHEIGHT);
+            try {
+                Display.setDisplayModeAndFullscreen(Display.getDisplayMode());
+            } catch (LWJGLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            fullScreen = false;
+        }
     }
 
 
-    public void holdFullScreenMouse() {
+    private void holdFullScreenMouse() {
         if(Mouse.getX() > WIDTH) Mouse.setCursorPosition(900, Mouse.getY());
         if(Mouse.getY() > HEIGHT) Mouse.setCursorPosition(Mouse.getX(), 540);
     }
