@@ -7,8 +7,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.opengl.Texture;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class Main {
@@ -20,7 +18,7 @@ public class Main {
     private int trueHeight; // Screen height full screen
     private int viewPortStartX; // X start coordinate of viewport
     private int viewPortStartY; // y start coordinate of viewport
-    private Texture cursorTexture; // Texture for the cursor replacement
+    private static boolean inGame = false; // Stores if the player is in game or on main menu
     private boolean fullScreen; // holding if the game is fullscreen or not
 
     /*
@@ -66,15 +64,19 @@ public class Main {
     /**
      * Starts the game loop.
      */
-    private void update() throws LWJGLException {
+    private void update() {
         Menu menu = new Menu();
+        Game game = new Game();
         while(!Display.isCloseRequested())
         {
             glClear(GL_COLOR_BUFFER_BIT);
             if(fullScreen)
                 holdFullScreenMouse();
             mainKeyListeners();
-            menu.run();
+            if(!inGame)
+                menu.run();
+            else
+                game.run();
             Display.update();
             Display.sync(60);
         }
@@ -95,7 +97,7 @@ public class Main {
     private void mainKeyListeners() {
         if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
             killAllGame();
-        if(Keyboard.isKeyDown(Keyboard.KEY_F2)== true)
+        if(Keyboard.isKeyDown(Keyboard.KEY_F2))
             toggleFullScreen();
     }
 
@@ -105,16 +107,14 @@ public class Main {
             try {
                 Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
             } catch (LWJGLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             fullScreen = true;
         } else {
             glViewport(viewPortStartX, viewPortStartY, FWIDTH, FHEIGHT);
             try {
-                Display.setDisplayModeAndFullscreen(Display.getDisplayMode());
+                Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
             } catch (LWJGLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             fullScreen = false;
@@ -125,6 +125,10 @@ public class Main {
     private void holdFullScreenMouse() {
         if(Mouse.getX() > WIDTH) Mouse.setCursorPosition(900, Mouse.getY());
         if(Mouse.getY() > HEIGHT) Mouse.setCursorPosition(Mouse.getX(), 540);
+    }
+
+    public static void setInGame() {
+        inGame = true;
     }
 
     public static void main(String[] args) {

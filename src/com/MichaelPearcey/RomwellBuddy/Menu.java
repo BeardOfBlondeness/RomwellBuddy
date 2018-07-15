@@ -13,7 +13,7 @@ public class Menu {
         play = new Button("res/menu/Play.png", 300, 300, new Runnable() {
             @Override
             public void run() {
-                //TODO Add play function
+                Main.setInGame();
             }
         });
         exit = new Button("res/menu/Exit.png", 300, 480, new Runnable() {

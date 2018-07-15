@@ -1,6 +1,5 @@
 package com.MichaelPearcey.RomwellBuddy;
 
-
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
@@ -29,7 +28,15 @@ public class Sprite {
         this.path = path;
         this.xPos = xPos;
         this.yPos = yPos;
-        tex = loadTexture();
+        tex = loadTexture(path);
+        xRes = tex.getImageWidth();
+        yRes = tex.getImageHeight();
+    }
+
+    public Sprite(Texture tex, int xPos, int yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.tex = tex;
         xRes = tex.getImageWidth();
         yRes = tex.getImageHeight();
     }
@@ -40,6 +47,14 @@ public class Sprite {
 
     public void setyRes(float yRes) {
         this.yRes = yRes;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public int getxPos() {
+        return xPos;
     }
 
     public void setxPos(int xPos) {
@@ -67,7 +82,11 @@ public class Sprite {
         glPopMatrix();
     }
 
-    private Texture loadTexture() {
+    public void setTex(Texture tex) {
+        this.tex = tex;
+    }
+
+    public static Texture loadTexture(String path) {
         String fileType = path.substring(path.length() - 3);
         if(fileType.equals("peg"))
             fileType = "jpeg";
@@ -81,5 +100,4 @@ public class Sprite {
         }
         return tex;
     }
-
 }
