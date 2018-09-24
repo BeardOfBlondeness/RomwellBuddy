@@ -1,0 +1,7 @@
+C:\Users\M1k3\AppData\Local\Temp\ccEQZYc4.o:Main.cpp:(.text+0x0): multiple definition of `main'
+C:\Users\M1k3\AppData\Local\Temp\ccW7zX9V.o:Main.cpp:(.text+0x0): first defined here
+C:\Users\M1k3\AppData\Local\Temp\ccEQZYc4.o:Main.cpp:(.bss+0x0): multiple definition of `window'
+C:\Users\M1k3\AppData\Local\Temp\ccW7zX9V.o:Main.cpp:(.bss+0x0): first defined here
+C:\Users\M1k3\AppData\Local\Temp\ccEQZYc4.o:Main.cpp:(.bss+0x210): multiple definition of `event'
+C:\Users\M1k3\AppData\Local\Temp\ccW7zX9V.o:Main.cpp:(.bss+0x210): first defined here
+collect2.exe: error: ld returned 1 exit status
